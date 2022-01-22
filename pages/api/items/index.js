@@ -2,7 +2,7 @@ import axios from "axios";
 import itemsMapper from "../../../utils/itemsMapper";
 
 export default async function handler(req, res) {
-  const { q: query, autocomplete, limit = 20, page = 1 } = req.query;
+  const { q: query, autocomplete, limit = 20, page = 1, type } = req.query;
   if (req.method === "GET") {
     try {
       if (autocomplete === "true" && query) {
@@ -16,7 +16,9 @@ export default async function handler(req, res) {
         const { data } = await axios.get(
           `https://api.openbrewerydb.org/breweries/${
             query ? "search" : ""
-          }?page=${page}&per_page=${limit}${query ? `&query=${query}` : ""}`
+          }?page=${page}&per_page=${limit}${query ? `&query=${query}` : ""}${
+            type ? `&by_type=${type}` : ""
+          }`
         );
 
         // Filter optional key properties and link a static random image for any item

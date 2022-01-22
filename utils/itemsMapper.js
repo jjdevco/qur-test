@@ -3,6 +3,7 @@ export default function (item) {
     id: item.id,
     name: item.name,
     description: item.street,
+    type: item.brewery_type,
     image: `https://picsum.photos/seed/${item.id}/500`,
     // get the left value of postal code and build a random price
     price: `${Math.floor(
