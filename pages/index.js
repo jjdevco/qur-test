@@ -1,5 +1,5 @@
 import Head from "next/head";
-
+import ItemsList from "../components/ItemsList";
 export default function Home() {
   return (
     <div>
@@ -11,6 +11,7 @@ export default function Home() {
 
       <main>
         <h1>Welcome to Marketplace!</h1>
+        <ItemsList />
       </main>
     </div>
   );
