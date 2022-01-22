@@ -11,7 +11,7 @@ export default async function handler(req, res) {
         );
 
         // Return minimum data for autocomplete
-        return res.status(200).json({ items: items.slice(0, 10) });
+        return res.status(200).json({ items: items.slice(0, 20) });
       } else {
         const { data } = await axios.get(
           `https://api.openbrewerydb.org/breweries/${

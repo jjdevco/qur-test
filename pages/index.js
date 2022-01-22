@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Navbar from "../components/Navbar";
 import ItemsList from "../components/ItemsList";
 import { Box } from "@chakra-ui/react";
 
@@ -16,7 +17,7 @@ export default function Home() {
         sx={{ maxWidth: "100vw", minHeight: "100vh" }}
         backgroundColor="orange.100"
       >
-        <h1>Welcome to Marketplace!</h1>
+        <Navbar />
         <ItemsList />
       </Box>
     </>
