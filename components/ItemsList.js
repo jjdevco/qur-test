@@ -3,6 +3,7 @@ import fetcher from "../utils/fetcher";
 import useSWRInfinite from "swr/infinite";
 import { useInView } from "react-intersection-observer";
 import ItemsListItem from "./ItemsListItem";
+import ItemsListSkeleton from "./ItemsListSkeleton";
 import { Stack } from "@chakra-ui/react";
 
 export default function ItemsList({ query, type }) {
@@ -41,25 +42,28 @@ export default function ItemsList({ query, type }) {
 
   return (
     <div>
-      <Stack
-        sx={{
-          maxWidth: "100vw",
-          flexWrap: "wrap",
-          justifyContent: "center",
-          padding: "30px 0",
-        }}
-        spacing={0}
-        isInline
-      >
-        {data?.map((items, index) => {
-          // `data` is an array of each page's API response.
-          return items.map((item) => <ItemsListItem key={item.id} {...item} />);
-        })}
-      </Stack>
-      {(isLoadingInitialData || isValidating) && <div>loading...</div>}
+      {data && (
+        <Stack
+          sx={{
+            maxWidth: "100vw",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            padding: "30px 0",
+          }}
+          spacing={0}
+          isInline
+        >
+          {data.map((items, index) => {
+            // `data` is an array of each page's API response.
+            return items.map((item) => (
+              <ItemsListItem key={item.id} {...item} />
+            ));
+          })}
+        </Stack>
+      )}
+      {(isLoadingInitialData || isValidating) && <ItemsListSkeleton />}
       <div
         style={{
-          background: "red",
           height: "5px",
           width: "100%",
         }}
