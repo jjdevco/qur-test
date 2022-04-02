@@ -4,7 +4,7 @@ import useSWRInfinite from "swr/infinite";
 import { useInView } from "react-intersection-observer";
 import ItemsListItem from "./ItemsListItem";
 import ItemsListSkeleton from "./ItemsListSkeleton";
-import { Stack, Text } from "@chakra-ui/react";
+import { Stack, Text, Grid } from "@chakra-ui/react";
 
 export default function ItemsList({ query, type }) {
   const [hasMore, setHasMore] = React.useState(true);
@@ -47,25 +47,14 @@ export default function ItemsList({ query, type }) {
 
   return (
     <div>
-      {data && (
-        <Stack
-          sx={{
-            maxWidth: "100vw",
-            flexWrap: "wrap",
-            justifyContent: "center",
-            padding: "30px 0",
-          }}
-          spacing={0}
-          isInline
-        >
-          {data.map((items, index) => {
-            // `data` is an array of each page's API response.
-            return items.map((item) => (
-              <ItemsListItem key={item.id} {...item} />
-            ));
-          })}
-        </Stack>
-      )}
+      <Grid templateColumns="repeat(auto-fit, minmax(160px, 1fr))">
+        {data?.map((items, index) => {
+          // `data` is an array of each page's API response.
+          return items.map((item) => <ItemsListItem key={item.id} {...item} />);
+        })}
+        {(isLoadingInitialData || isValidating) && <ItemsListSkeleton />}
+      </Grid>
+
       {!hasMore && (
         <Text
           sx={{
@@ -78,7 +67,7 @@ export default function ItemsList({ query, type }) {
           No more results
         </Text>
       )}
-      {(isLoadingInitialData || isValidating) && <ItemsListSkeleton />}
+
       <div
         style={{
           height: "5px",
